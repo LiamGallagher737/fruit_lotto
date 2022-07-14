@@ -57,6 +57,7 @@ if __name__ == "__main__":
         f.write(json.dumps(data, indent=1))
         f.close()
 
+        # Notify the user that everything was successful
         pyautogui.press('/')
         pyautogui.typewrite("msg " + username + " Successfully added $" + str(payment) + " to your balance. Your total is now $" + str(data[username]) + " for a total of " + str(tickets(data[username])) + " tickets. Good luck!")
         pyautogui.press('enter')

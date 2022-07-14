@@ -13,6 +13,7 @@ f.close()
 
 sleep(10)
 
+# Announce closure of ticket sales
 pyautogui.press('t')
 pyautogui.typewrite("Lotto ticket purchases are now closed, everyone who purchased a ticket will receive a message confirming their tickets")
 pyautogui.press('enter')
@@ -20,6 +21,7 @@ pyautogui.press('enter')
 tickets_total = []
 prize_pool = 0.0
 
+# Message each customer and count tickets
 for username in data:
     sleep(2)
     pyautogui.press('/')
@@ -29,18 +31,22 @@ for username in data:
     for _ in range(tickets(data[username])):
         tickets_total.append(username)
 
+# Announce prize pool
 pyautogui.press('t')
 pyautogui.typewrite("Total pize pool of the lottery is $" + str(prize_pool) + "! Good luck!")
 pyautogui.press('enter')
 
 sleep(10)
 
+# Pick random winner
 winner = random.choice(tickets_total)
 
+# Announce winner
 pyautogui.press('t')
 pyautogui.typewrite("Congratulations " + winner + " for winning the lottery!")
 pyautogui.press('enter')
 
+# Message winner
 pyautogui.press('/')
 pyautogui.typewrite("msg " + username + " YOU WON! You will receive your money shortly!")
 pyautogui.press('enter')
