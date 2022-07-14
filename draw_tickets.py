@@ -1,8 +1,8 @@
 from math import floor
-from random import random
 from time import sleep
-import pyautogui
+from random import random
 import json, random
+import minecraft
 
 def tickets(payment):
     return floor(payment / 1000.0)
@@ -14,9 +14,7 @@ f.close()
 sleep(10)
 
 # Announce closure of ticket sales
-pyautogui.press('t')
-pyautogui.typewrite("Lotto ticket purchases are now closed, everyone who purchased a ticket will receive a message confirming their tickets")
-pyautogui.press('enter')
+minecraft.send_announcement("Lotto ticket purchases are now closed, everyone who purchased a ticket will receive a message confirming their tickets")
 
 tickets_total = []
 prize_pool = 0.0
@@ -24,29 +22,27 @@ prize_pool = 0.0
 # Message each customer and count tickets
 for username in data:
     sleep(2)
-    pyautogui.press('/')
-    pyautogui.typewrite("msg " + username + " You have got " + str(tickets(data[username])) + " tickets from $" + str(data[username]) + ". Good luck!")
-    pyautogui.press('enter')
+    minecraft.send_message(username, "You have got " + str(tickets(data[username])) + " tickets from $" + str(data[username]) + ". Good luck!")
     prize_pool += data[username]
     for _ in range(tickets(data[username])):
         tickets_total.append(username)
 
 # Announce prize pool
-pyautogui.press('t')
-pyautogui.typewrite("Total pize pool of the lottery is $" + str(prize_pool) + "! Good luck!")
-pyautogui.press('enter')
+minecraft.send_announcement("Total pize pool of the lottery is $" + str(prize_pool) + "! Good luck!")
 
-sleep(10)
+sleep(7)
+minecraft.send_announcement("3")
+sleep(1)
+minecraft.send_announcement("2")
+sleep(1)
+minecraft.send_announcement("1")
+sleep(1)
 
 # Pick random winner
 winner = random.choice(tickets_total)
 
 # Announce winner
-pyautogui.press('t')
-pyautogui.typewrite("Congratulations " + winner + " for winning the lottery!")
-pyautogui.press('enter')
+minecraft.send_announcement("The winner is " + winner + "! Congratulations!")
 
 # Message winner
-pyautogui.press('/')
-pyautogui.typewrite("msg " + username + " YOU WON! You will receive your money shortly!")
-pyautogui.press('enter')
+minecraft.send_message(username, "Congratulations! You won the grand prize of $" + str(prize_pool))
