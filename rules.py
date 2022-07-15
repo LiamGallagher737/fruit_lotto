@@ -1,3 +1,5 @@
+from math import floor
+
 def is_command(line):
     if "[CHAT]" not in line:
         return False
@@ -13,3 +15,6 @@ def is_payment(line):
     if " has been received from " not in line:
         return False
     return True
+
+def tickets(payment):
+    return floor(payment / 1000.0)

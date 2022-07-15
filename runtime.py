@@ -1,4 +1,3 @@
-from math import floor
 import time, os, json
 import minecraft, rules
 
@@ -10,9 +9,6 @@ def follow(thefile):
             time.sleep(0.1)
             continue
         yield line
-
-def tickets(payment):
-    return floor(payment / 1000.0)
 
 def log(username, message):
     print(username + " " + message)
@@ -88,11 +84,11 @@ if __name__ == "__main__":
             f.write(json.dumps(data, indent=1))
             f.close()
 
-            if tickets(data[username]) > 25:
+            if rules.tickets(data[username]) > 25:
                 minecraft.send_message(
                     username,
                     "Your new balance has you at " +
-                    str(tickets(data[username])) +
+                    str(rules.tickets(data[username])) +
                     " tickets. However the limit is 25, if you wish to get a partial refund of $" +
                     str(data[username] - 25000.0) +
                     " to bring you back to 25 tickets please message the organizers " +
@@ -105,6 +101,6 @@ if __name__ == "__main__":
                 " to your balance. Your total is now $" +
                 str(data[username]) +
                 " for a total of " +
-                str(tickets(data[username])) +
+                str(rules.tickets(data[username])) +
                 " tickets. Good luck!"
             )
