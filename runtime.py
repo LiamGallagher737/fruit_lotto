@@ -65,6 +65,14 @@ if __name__ == "__main__":
                 )
                 continue
 
+            if "active" or "on" in line:
+                log(username, "used the active/on command")
+                minecraft.send_message(
+                    username,
+                    "The lotto bot is active"
+                )
+                continue
+
         # Payments
         if rules.is_payment(line):
 
