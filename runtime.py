@@ -26,11 +26,11 @@ if __name__ == "__main__":
     logfile = open(os.getenv("APPDATA")+"/.minecraft/logs/latest.log", "r")
     loglines = follow(logfile)
 
-    f = open("data.json", "w")
-    if os.stat("data.json").st_size == 0:
+    # Make sure file is created and has valid json
+    f = open("data.json", "a")
+    if os.path.getsize("data.json") < 2:
         f.write("{}")
     f.close()
-
 
     for line in loglines:
 
@@ -57,7 +57,7 @@ if __name__ == "__main__":
                 continue
 
             # GitHub repo command
-            if "git" or "code" in line:
+            if "code" in line:
                 log(username, "used the git/code command")
                 minecraft.send_message(
                     username,
@@ -65,7 +65,7 @@ if __name__ == "__main__":
                 )
                 continue
 
-            if "active" or "on" in line:
+            if "active" in line:
                 log(username, "used the active/on command")
                 minecraft.send_message(
                     username,
@@ -92,16 +92,16 @@ if __name__ == "__main__":
             f.write(json.dumps(data, indent=1))
             f.close()
 
-            if rules.tickets(data[username]) > 25:
+            if data[username] >= 25000.0:
                 minecraft.send_message(
                     username,
-                    "Your new balance has you at " +
-                    str(rules.tickets(data[username])) +
-                    " tickets. However the limit is 25, if you wish to get a partial refund of $" +
+                    "Your new balance of $" +
+                    str(data[username]) +
+                    " is over the 25 ticket limit ($25000), if you wish the get a partial refund of $" +
                     str(data[username] - 25000.0) +
-                    " to bring you back to 25 tickets please message the organizers " +
-                    "else the extra money will be added to the prize pool and you will still only receive 25 tickets."
+                    " message the organizers "
                 )
+                continue
 
             minecraft.send_message(
                 username,
