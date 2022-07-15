@@ -68,6 +68,7 @@ if __name__ == "__main__":
                 )
                 continue
 
+            # Active command
             if "active" in line:
                 log(username, "used the active/on command")
                 minecraft.send_message(
@@ -75,6 +76,18 @@ if __name__ == "__main__":
                     "The lotto bot is active"
                 )
                 continue
+
+            # Prize command
+            if "prize" in line:
+                prize = 0.0
+                data = get_data()
+                for k in data:
+                    prize += data[k]
+                minecraft.send_message(
+                    username,
+                    "The total prizepool is $" +
+                    str(prize)
+                )
 
         # Payments
         if rules.is_payment(line):
@@ -95,7 +108,7 @@ if __name__ == "__main__":
             f.write(json.dumps(data, indent=1))
             f.close()
 
-            if data[username] >= 25000.0:
+            if data[username] > 25000.0:
                 minecraft.send_message(
                     username,
                     "Your new balance of $" +
