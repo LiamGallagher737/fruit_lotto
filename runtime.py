@@ -47,12 +47,15 @@ if __name__ == "__main__":
                     minecraft.send_message(
                         username,
                         "Your balance is $" +
-                        str(data[username])
+                        str(data[username]) +
+                        " giving you " +
+                        str(rules.tickets(data[username])) +
+                        " tickets!"
                     )
                 else:
                     minecraft.send_message(
                         username,
-                        "Your account is empty :("
+                        "Your account is empty"
                     )
                 continue
 
